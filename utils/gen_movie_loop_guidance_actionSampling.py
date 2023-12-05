@@ -20,7 +20,7 @@ import os
 if __name__ == "__main__":
     #Define the root path that store the data
 
-    DATA_FOLDER = '../MultiAgentDataset/Results_best/AnimeDemo'
+    DATA_FOLDER = '../Data/Results_best/AnimeDemo'
 
 
     view_guidance = False
