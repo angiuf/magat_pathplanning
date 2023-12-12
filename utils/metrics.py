@@ -339,4 +339,6 @@ class MonitoringMultiAgentPerformance:
             file_name = os.path.join(dir_name,'statistics_{}_{}_{}_comR_{}_{}_{}.mat'.format(dsecription, self.config.guidance, self.config.action_select, self.config.commR,self.config.data_set, log_epoch))
         else:
             file_name = os.path.join(dir_name, 'statistics_{}_IDMAP{:5d}_{}_{}_comR_{}_{}_{}.mat'.format(dsecription, self.config.id_env, self.config.guidance, self.config.action_select,self.config.commR,self.config.data_set,log_epoch))
+        print("Filename: ", file_name)
+        print("Save statistics: ", self.save_statistics.keys())
         sio.savemat(file_name, self.save_statistics,appendmat=True, format='5',long_field_names=False, do_compression=False, oned_as='row')

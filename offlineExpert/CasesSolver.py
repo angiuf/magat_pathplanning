@@ -289,7 +289,7 @@ class CasesGen:
 
         return map_env
 
-    def setup_cases(self, id_random_env, num_cases_PEnv):
+    def setup_cases(self, id_random_env, num_cases_PEnv, open_list = None):
         # Randomly generate certain number of unique cases in same map
 
         # print(map_env)
@@ -313,30 +313,36 @@ class CasesGen:
                                                                                                   self.size_load_map[1],
                                                                                                   num_obstacle))
         # time.sleep(3)
-        list_freespace = []
-        list_obstacle = []
+
+        if open_list is None:
+            list_freespace = []
+            list_obstacle = []
 
 
-        # transfer into list (tuple)
-        for id_FS in range(num_freespace):
-            list_freespace.append((array_freespace[id_FS, 0], array_freespace[id_FS, 1]))
+            # transfer into list (tuple)
+            for id_FS in range(num_freespace):
+                list_freespace.append((array_freespace[id_FS, 0], array_freespace[id_FS, 1]))
 
-        for id_Obs in range(num_obstacle):
-            list_obstacle.append((array_obstacle[id_Obs, 0], array_obstacle[id_Obs, 1]))
+            for id_Obs in range(num_obstacle):
+                list_obstacle.append((array_obstacle[id_Obs, 0], array_obstacle[id_Obs, 1]))
 
-        # print(list_freespace)
-        pair_CaseSet_PEnv = []
-        pairStore = []
-        pair_agent = list(itertools.combinations(range(self.num_agents), 2))
+            # print(list_freespace)
+            pair_CaseSet_PEnv = []
+            pairStore = []
+            pair_agent = list(itertools.combinations(range(self.num_agents), 2))
 
-        num_cases_PEnv_exceed = int(5 * num_cases_PEnv)
+            num_cases_PEnv_exceed = int(5 * num_cases_PEnv)
 
-        for _ in range(num_cases_PEnv_exceed):
-            pairset = []
-            for id_agents in range(self.num_agents):
-                ID_cases_agent = random.sample(list_freespace, 2)
-                pairset.append(ID_cases_agent)
-            pair_CaseSet_PEnv.append(pairset)
+            for _ in range(num_cases_PEnv_exceed):
+                pairset = []
+                for id_agents in range(self.num_agents):
+                    ID_cases_agent = random.sample(list_freespace, 2)
+                    pairset.append(ID_cases_agent)
+                pair_CaseSet_PEnv.append(pairset)
+        else:
+            pair_CaseSet_PEnv = open_list
+            pair_agent = list(itertools.combinations(range(self.num_agents), 2))
+            pairStore = []
 
         for pair_CaseSet in pair_CaseSet_PEnv:
 
@@ -622,7 +628,7 @@ if __name__ == '__main__':
     else:
         path_loadmap = args.path_loadmap
         num_Env = dataset.get_numEnv()
-        # print(num_Env)
+        print("Num of env: ", num_Env)
         for id_Env in range(num_Env):
             print('\n################## {}  ####################\n'.format(id_Env))
             # dataset.setup_CasePool_(id_Env)

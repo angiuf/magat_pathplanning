@@ -379,7 +379,8 @@ class EnvsGen:
     def mapload(self, id_env):
         load_env = self.path_loadmap + 'map_{:02d}x{:02d}_density_p{}_id_{:02d}.npy'.format(self.size_load_map[0], self.size_load_map[1],
                                                                                             self.map_density, id_env)
-        map_env = np.load(load_env)
+        map_env, self.open_list = np.load(load_env, allow_pickle=True)
+        print(map_env)
         return map_env
 
 
@@ -410,6 +411,7 @@ class EnvsGen:
         map_env_raw = self.mapGen(width=self.size_load_map[0], height=self.size_load_map[1],
                               complexity=self.map_complexity, density=self.map_density,
                                   path_size=self.path_size, central_path_size=self.central_path_size)
+        map_env_raw = self.mapload(id_random_env)
 
 
         if self.gen_map_type == 'maze' or self.gen_map_type == 'random':
@@ -503,9 +505,3 @@ if __name__ == '__main__':
 
 
     dataset.genMap()
-
-
-
-
-
-

@@ -124,6 +124,7 @@ class CasesGen:
     def search_Cases(self, dir, DATA_EXTENSIONS='.yaml'):
         # make a list of file name of input yaml
         list_path = []
+        print(dir)
         assert os.path.isdir(dir), '%s is not a valid directory' % dir
 
         for root, _, fnames in sorted(os.walk(dir)):
@@ -548,12 +549,14 @@ class CasesGen:
     def setup_CasePool__(self, id_env):
         filename = self.list_path_loadSourceMap[id_env]
         print(filename)
-        map_width = int(filename.split('{}-'.format(self.config.loadmap_TYPE))[-1].split('-')[0])
+        # map_width = int(filename.split('{}-'.format(self.config.loadmap_TYPE))[-1].split('-')[0])
+        map_width = self.config.map_width
 
         self.map_TYPE = self.config.loadmap_TYPE
         self.size_load_map = (map_width, map_width)
-        self.label_density = int(
-            filename.split('{}-'.format(self.config.loadmap_TYPE))[-1].split('-')[-1].split('_ID')[0])
+        #  self.label_density = int(
+        #     filename.split('{}-'.format(self.config.loadmap_TYPE))[-1].split('-')[-1].split('_ID')[0])
+        self.label_density = self.config.map_density
         self.map_density = int(self.label_density)
         self.createFolder()
 
@@ -720,7 +723,7 @@ if __name__ == '__main__':
     else:
         path_loadSourceMap = args.path_loadSourceMap
         num_Env = dataset.get_numEnv()
-        # print(num_Env)
+        print(num_Env)
         for id_Env in range(num_Env):
             print('\n################## {}  ####################\n'.format(id_Env))
             # dataset.setup_CasePool_(id_Env)

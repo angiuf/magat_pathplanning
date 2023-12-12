@@ -1,4 +1,4 @@
-"""
+"""int
 Main execution file for MAPF
 
 -Capture the config file
