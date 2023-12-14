@@ -31,7 +31,7 @@ parser.add_argument('--random_map', action='store_true', default=False)
 parser.add_argument('--gen_CasePool', action='store_true', default=False)
 parser.add_argument('--chosen_solver', type=str, default='ECBS')
 parser.add_argument('--w', type=float, default=1.1)
-parser.add_argument('--timeout', type=int, default=300)
+parser.add_argument('--timeout', type=int, default=5)
 
 parser.add_argument('--num_caseSetup_pEnv', type=int, default=100)
 parser.add_argument('--ID_startMap', type=int, default=0)
@@ -320,7 +320,7 @@ class CasesGen:
 
 
         all_posible_indexes = np.where(dist_matrix!=0)[0]
-        print('all available pairs:', all_posible_indexes)
+        # print('all available pairs:', all_posible_indexes)
         all_chosen_pair_indexes = []
         for i in range(num_case):
             # Do select
@@ -367,6 +367,7 @@ class CasesGen:
         self.size_load_map = np.shape(map_env)
 
 
+
         array_freespace = np.argwhere(map_env == 0)
         num_freespace = array_freespace.shape[0]
         array_obstacle = np.transpose(np.nonzero(map_env))
@@ -385,9 +386,9 @@ class CasesGen:
         for id_Obs in range(num_obstacle):
             list_obstacle.append((array_obstacle[id_Obs, 0], array_obstacle[id_Obs, 1]))
 
-        random_list = np.array(list(itertools.product(range(self.config.map_width), range(self.config.map_width))))
-        # _, random_list = np.load("./map_15x15_density_p0.25_id_00.npy", allow_pickle=True)
-        print(random_list)
+        # random_list = np.array(list(itertools.product(range(self.config.map_width), range(self.config.map_width))))
+        _, random_list = np.load("./map_15x15_density_p0.25_id_00.npy", allow_pickle=True)
+        # print(random_list)
 
         # print(list_freespace)
         pairStore = []
@@ -630,13 +631,13 @@ class CasesGen:
     def compute_thread(self, thread_id, chosen_solver):
         while True:
             try:
-                # print(thread_id)
+                print(thread_id)
                 id_case = self.task_queue.get(block=False)
-                # print('thread {} get task:{}'.format(thread_id, id_case))
+                print('thread {} get task:{}'.format(thread_id, id_case))
                 self.runExpertSolver(id_case, chosen_solver)
-                # print('thread {} finish task:{}'.format(thread_id, id_case))
+                print('thread {} finish task:{}'.format(thread_id, id_case))
             except:
-                # print('thread {} no task, exit'.format(thread_id))
+                print('thread {} no task, exit'.format(thread_id))
                 return
 
 
@@ -733,5 +734,5 @@ if __name__ == '__main__':
             print('\n################## {}  ####################\n'.format(id_Env))
             # dataset.setup_CasePool_(id_Env)
             dataset.setup_CasePool__(id_Env)
-            time.sleep(20)
+            time.sleep(5)
             dataset.computeSolution(args.chosen_solver)

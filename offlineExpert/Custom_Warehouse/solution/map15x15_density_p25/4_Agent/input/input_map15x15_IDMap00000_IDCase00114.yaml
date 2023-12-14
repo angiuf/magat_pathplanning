@@ -60,14 +60,14 @@ map:
     - [12, 11]
 agents:
   - name: agent0
-    start: [3, 7]
-    goal: [9, 12]
+    start: [12, 8]
+    goal: [6, 4]
   - name: agent1
-    start: [5, 7]
-    goal: [11, 3]
+    start: [8, 0]
+    goal: [2, 6]
   - name: agent2
-    start: [14, 12]
-    goal: [5, 0]
+    start: [2, 8]
+    goal: [8, 4]
   - name: agent3
-    start: [11, 4]
-    goal: [5, 8]
+    start: [3, 0]
+    goal: [2, 10]
